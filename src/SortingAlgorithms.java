@@ -219,21 +219,9 @@ public class SortingAlgorithms
     {
         if (first < last)
         {
-            // pick the pivot
-
-            // Place the pivot at the start of the array
-
-            // Go through the array: place to the left of the pivot, any
-            // element less than the pivot
-            int toTheLeft = first; // index of the last element
-                                   // to the left of the pivot
-
-            // Place the pivot between the elements less than the pivot
-            // and the elements greater than or equal to the pivot
-
-            // Repeat the process with what is to the left of the pivot
-            // and what is to the right of the pivot
-
+            int pivot = this.pickPivotLocation(first, last);
+            pickPivotAndSort(first, pivot - 1);
+            pickPivotAndSort(pivot + 1, last);
         }
         // else
         // Base case: nothing to do
@@ -244,7 +232,19 @@ public class SortingAlgorithms
      */
     private int pickPivotLocation(int first, int last)
     {
-        return first; // keep it simple
+        int pivot = a[last];
+
+        int i = first - 1;
+        for (int j = first; j < last; j++)
+        {
+            if (a[j] < pivot)
+            {
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, last);
+        return i + 1;
     }
 
     /**
