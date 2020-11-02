@@ -80,15 +80,15 @@ public class SortingAlgorithms
     }
 
     /**
-     * Precondition: a is ordered from 0 to i-1 
-     * Postcondition: a is ordered from 0 to i
+     * Precondition: a is ordered from 0 to i-1 Postcondition: a is ordered from
+     * 0 to i
      */
     private void insert(int i)
     {
         int j = i;
-        while (j > 0 && a[j-1] > a[j]) 
+        while (j > 0 && a[j - 1] > a[j])
         {
-            swap(j, j-1);
+            swap(j, j - 1);
             j--;
         }
     }
@@ -99,20 +99,20 @@ public class SortingAlgorithms
     public void bubbleSort()
     {
         boolean unsorted = true;
-        
+
         while (unsorted)
         {
             unsorted = false;
             for (int i = 1; i < a.length; i++)
             {
-                if (a[i] < a[i-1])
+                if (a[i] < a[i - 1])
                 {
-                    swap(i, i-1);
+                    swap(i, i - 1);
                     unsorted = true;
                 }
             }
         }
-        
+
     }
 
     /**
@@ -120,6 +120,7 @@ public class SortingAlgorithms
      */
     public void mergeSort()
     {
+        this.divideInTwoSortAndMerge(0, a.length - 1);
     }
 
     /**
@@ -130,12 +131,13 @@ public class SortingAlgorithms
         if (first < last)
         {
             // Midpoint
-
+            int mid = first + (last - first) / 2;
             // Sort a[first,...,mid] (using divideInTwoSortAndMerge)
-
+            this.divideInTwoSortAndMerge(first, mid);
             // Sort a[mid+1,...,last] (using divideInTwoSortAndMerge)
-
+            this.divideInTwoSortAndMerge(mid + 1, last);
             // Merge sorted halves
+            this.merge(first, mid, last);
         }
         // else
         // Base case: nothing to do
@@ -154,6 +156,7 @@ public class SortingAlgorithms
 
         // Allocate a temp array on the heap
         // temp must be big enough to receive the two halves of A
+        int[] temp = new int[last - first + 1];
 
         // Index for temp
         int index = 0;
@@ -166,12 +169,39 @@ public class SortingAlgorithms
         int last2 = last;
 
         // Copy the two halves in temp (in increasing order)
+        while (first1 <= last1 && first2 <= last2)
+        {
+            if (a[first1] < a[first2])
+            {
+                temp[index] = a[first1];
+                first1++;
+            }
+            else
+            {
+                temp[index] = a[first2];
+                first2++;
+            }
+            index++;
+        }
 
         // Anything left in the first half
+        while (first1 <= last1)
+        {
+            temp[index] = a[first1];
+            index++;
+            first1++;
+        }
 
         // Anything left in the second half
+        while (first2 <= last2)
+        {
+            temp[index] = a[first2];
+            index++;
+            first2++;
+        }
 
         // Copy temp in a
+        System.arraycopy(temp, 0, a, first, temp.length);
     }
 
     /**
