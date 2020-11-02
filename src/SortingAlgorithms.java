@@ -73,15 +73,24 @@ public class SortingAlgorithms
      */
     public void insertSort()
     {
-
+        for (int i = 1; i < a.length; i++)
+        {
+            insert(i);
+        }
     }
 
     /**
-     * Precondition: a is ordered from 0 to i-1 Postcondition: a is ordered from
-     * 0 to i
+     * Precondition: a is ordered from 0 to i-1 
+     * Postcondition: a is ordered from 0 to i
      */
     private void insert(int i)
     {
+        int j = i;
+        while (j > 0 && a[j-1] > a[j]) 
+        {
+            swap(j, j-1);
+            j--;
+        }
     }
 
     /**
@@ -89,6 +98,21 @@ public class SortingAlgorithms
      */
     public void bubbleSort()
     {
+        boolean unsorted = true;
+        
+        while (unsorted)
+        {
+            unsorted = false;
+            for (int i = 1; i < a.length; i++)
+            {
+                if (a[i] < a[i-1])
+                {
+                    swap(i, i-1);
+                    unsorted = true;
+                }
+            }
+        }
+        
     }
 
     /**
